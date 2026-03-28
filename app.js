@@ -125,6 +125,7 @@ const MEMBERS = [
     { id: "31", name: "Pramod", points: 0 },
     { id: "33", name: "Vishnu", points: 0 },
     { id: "34", name: "Venkatesh", points: 0 },
+    { id: "34", name: "Manikandan", points: 0 },
     { id: "9999", name: "TBD", points: 0 }
 ];
 
@@ -135,12 +136,12 @@ let members = MEMBERS;
 function getMemberBadge(id) {
     const member = members.find(m => m.id === id);
     if (!member) return `<span class="member-badge"><span class="m-name">Unknown</span></span>`;
-    
+
     // For non-participants like TBD or missing names
     if (member.name === "TBD" || member.name === "-") {
         return `<span class="member-badge"><span class="m-name">${member.name}</span></span>`;
     }
-    
+
     return `
     <span class="member-badge">
         <span class="tm-prefix">TM</span>
