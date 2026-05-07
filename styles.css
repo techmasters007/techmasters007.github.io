@@ -30,6 +30,80 @@
   --font:      'Inter', system-ui, sans-serif;
 }
 
+/* ── Light mode overrides ────────────────────────────────────────────────────── */
+[data-theme="light"] {
+  --bg:        #f8f7ff;
+  --bg-2:      #eeedf8;
+  --bg-card:   #ffffff;
+  --bg-card-h: #f3f2fc;
+  --border:    #e2e0f0;
+  --border-l:  #c7c4e8;
+
+  --sd:        #6d28d9;
+  --sd-light:  #7c3aed;
+  --sd-bg:     rgba(109, 40, 217, 0.07);
+  --sd-bg-h:   rgba(109, 40, 217, 0.13);
+
+  --dsa:       #059669;
+  --dsa-light: #10b981;
+  --dsa-bg:    rgba(5, 150, 105, 0.07);
+  --dsa-bg-h:  rgba(5, 150, 105, 0.13);
+
+  --easy:      #059669;
+  --medium:    #d97706;
+  --hard:      #dc2626;
+
+  --text:      #1a1830;
+  --text-2:    #4b4878;
+  --text-3:    #7c79a8;
+}
+
+/* Navbar blur tint in light mode */
+[data-theme="light"] #navbar {
+  background: rgba(248, 247, 255, 0.92);
+}
+
+/* Code block stays dark in light mode — easier to read */
+[data-theme="light"] .code-block {
+  background: #1e1d2e;
+  border-color: #2a2840;
+  color: #a9b1d6;
+}
+
+/* Scrollbar in light mode */
+[data-theme="light"] ::-webkit-scrollbar-track { background: var(--bg-2); }
+[data-theme="light"] ::-webkit-scrollbar-thumb { background: var(--border-l); }
+
+/* Theme toggle button */
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--text-2);
+  font-size: 15px;
+  cursor: pointer;
+  transition: color .15s, border-color .15s, background .15s, transform .15s;
+  flex-shrink: 0;
+}
+
+.theme-toggle:hover {
+  color: var(--text);
+  border-color: var(--border-l);
+  transform: rotate(20deg);
+}
+
+/* Smooth theme transitions */
+body, #navbar, .category-card, .topic-card, .topic-section,
+.topic-header, .component-card, .tradeoff-card, .complexity-card,
+.search-bar, .back-btn, .share-btn, .tag, .badge {
+  transition: background-color .25s ease, border-color .25s ease, color .25s ease;
+}
+
 /* ── Reset & Base ────────────────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 

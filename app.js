@@ -1,3 +1,23 @@
+// ── Theme ─────────────────────────────────────────────────────────────────────
+
+function getTheme() {
+  return localStorage.getItem('tm-theme') || 'dark';
+}
+
+function applyTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem('tm-theme', theme);
+}
+
+function toggleTheme() {
+  applyTheme(getTheme() === 'dark' ? 'light' : 'dark');
+  // Re-render nav so icon updates
+  renderNav();
+}
+
+// Apply saved theme immediately before first render (prevents flash)
+applyTheme(getTheme());
+
 // ── Share URL helper ─────────────────────────────────────────────────────────
 // Returns the /topics/ redirect page URL (carries OG tags for WhatsApp previews).
 // Works both locally (file://) and when deployed to GitHub Pages.
@@ -342,7 +362,11 @@ function renderTopic(type, id) {
 
 function renderNav() {
   const { section } = getRoute();
-  const isHome = section === 'home';
+  const isHome  = section === 'home';
+  const isDark  = getTheme() === 'dark';
+  const themeIcon  = isDark  ? 'fa-sun'  : 'fa-moon';
+  const themeTitle = isDark  ? 'Switch to light mode' : 'Switch to dark mode';
+
   document.getElementById('navbar').innerHTML = `
     <div class="nav-inner">
       <div class="nav-logo" onclick="navigate('home')">
@@ -358,6 +382,9 @@ function renderNav() {
           <i class="fa-solid fa-code"></i> DSA
         </a>
       </nav>
+      <button class="theme-toggle" onclick="toggleTheme()" title="${themeTitle}" aria-label="${themeTitle}">
+        <i class="fa-solid ${themeIcon}"></i>
+      </button>
     </div>
   `;
 }
