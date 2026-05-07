@@ -1,0 +1,64 @@
+<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0d0c18"/>
+      <stop offset="100%" stop-color="#13121f"/>
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0" y1="0" x2="1200" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#7c3aed"/>
+      <stop offset="100%" stop-color="#10b981"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="40" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bgGrad)"/>
+
+  <!-- Glow blobs -->
+  <circle cx="200" cy="180" r="200" fill="#7c3aed" opacity="0.08" filter="url(#glow)"/>
+  <circle cx="1000" cy="450" r="220" fill="#10b981" opacity="0.07" filter="url(#glow)"/>
+
+  <!-- Top accent bar -->
+  <rect width="1200" height="5" fill="url(#accentGrad)"/>
+
+  <!-- Border frame -->
+  <rect x="1" y="1" width="1198" height="628" rx="0" fill="none" stroke="#2a2840" stroke-width="1"/>
+
+  <!-- Rocket icon circle -->
+  <circle cx="600" cy="195" r="52" fill="#1a1928" stroke="#2a2840" stroke-width="1.5"/>
+  <text x="600" y="212" font-family="Arial, sans-serif" font-size="42" text-anchor="middle" fill="#a78bfa">⚡</text>
+
+  <!-- TechMaster wordmark -->
+  <text x="600" y="320" font-family="'Arial Black', Arial, sans-serif" font-size="78" font-weight="900" text-anchor="middle" letter-spacing="-2">
+    <tspan fill="#ffffff">Tech</tspan><tspan fill="#a78bfa">Master</tspan>
+  </text>
+
+  <!-- Tagline -->
+  <text x="600" y="385" font-family="Arial, sans-serif" font-size="26" text-anchor="middle" fill="#718096" letter-spacing="1">
+    Knowledge Base
+  </text>
+
+  <!-- Divider line -->
+  <rect x="480" y="413" width="240" height="1.5" fill="url(#accentGrad)" rx="1"/>
+
+  <!-- Pill tags -->
+  <!-- System Design pill -->
+  <rect x="296" y="442" width="188" height="36" rx="18" fill="#1a1928" stroke="#7c3aed" stroke-width="1.2"/>
+  <text x="390" y="466" font-family="Arial, sans-serif" font-size="17" font-weight="600" text-anchor="middle" fill="#a78bfa">System Design</text>
+
+  <!-- DSA pill -->
+  <rect x="506" y="442" width="188" height="36" rx="18" fill="#1a1928" stroke="#10b981" stroke-width="1.2"/>
+  <text x="600" y="466" font-family="Arial, sans-serif" font-size="17" font-weight="600" text-anchor="middle" fill="#6ee7b7">DSA</text>
+
+  <!-- Interview Prep pill -->
+  <rect x="716" y="442" width="188" height="36" rx="18" fill="#1a1928" stroke="#2a2840" stroke-width="1.2"/>
+  <text x="810" y="466" font-family="Arial, sans-serif" font-size="17" font-weight="600" text-anchor="middle" fill="#718096">Interview Prep</text>
+
+  <!-- Bottom watermark -->
+  <text x="600" y="576" font-family="Arial, sans-serif" font-size="18" text-anchor="middle" fill="#4a4870">
+    techmasters007.github.io
+  </text>
+</svg>

@@ -1,3 +1,11 @@
+// ── Share URL helper ─────────────────────────────────────────────────────────
+// Returns the /topics/ redirect page URL (carries OG tags for WhatsApp previews).
+// Works both locally (file://) and when deployed to GitHub Pages.
+function getTopicShareUrl(type, id) {
+  const base = window.location.href.split('index.html')[0].split('#')[0];
+  return `${base}topics/${type}-${id}.html`;
+}
+
 // ── Router ────────────────────────────────────────────────────────────────────
 
 function getRoute() {
@@ -151,7 +159,7 @@ function renderTopic(type, id) {
   const colorClass = type === 'system-design' ? 'sd' : 'dsa';
   const categoryLabel = type === 'system-design' ? 'System Design' : 'DSA';
 
-  const shareUrl = `${window.location.origin}${window.location.pathname}#${type}/${id}`;
+  const shareUrl = getTopicShareUrl(type, id);
 
   const questionsHtml = topic.expectedQuestions.map(q => `<li>${q}</li>`).join('');
 
