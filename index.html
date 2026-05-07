@@ -1,134 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TechMaster Community</title>
-    <!-- CSS Link -->
-    <link rel="stylesheet" href="styles.css">
-    <!-- Google Fonts for premium typography -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- FontAwesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TechMaster Knowledge Base</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <!-- Animated background -->
-    <div class="glow-bg">
-        <div class="glow-circle circle-1"></div>
-        <div class="glow-circle circle-2"></div>
-        <div class="glow-circle circle-3"></div>
-    </div>
-
-    <div class="app-container">
-        <!-- Header -->
-        <header class="app-header slim-header glass-panel animate-on-load" style="--delay: 0.1s">
-            <div class="logo-box">
-                <i class="fa-solid fa-code icon-gradient pulse-animation"></i>
-                <h1>TechMaster</h1>
-            </div>
-            <a href="https://chat.whatsapp.com/KT7wIllwg3lEC1yrrzwjt4" target="_blank" class="join-btn">
-                <i class="fa-brands fa-whatsapp"></i> <span class="join-txt">Join</span>
-            </a>
-        </header>
-
-        <!-- Navigation Tabs -->
-        <nav class="glass-tabs animate-on-load" style="--delay: 0.2s">
-            <button class="nav-btn active" data-tab="tab-leaderboard">
-                <i class="fa-solid fa-trophy"></i> Leaderboard
-            </button>
-            <button class="nav-btn" data-tab="tab-members">
-                <i class="fa-solid fa-users"></i> Members
-            </button>
-            <button class="nav-btn" data-tab="tab-events">
-                <i class="fa-solid fa-calendar-days"></i> Events
-            </button>
-            <button class="nav-btn" data-tab="tab-point-system">
-                <i class="fa-solid fa-star"></i> Points & Roles
-            </button>
-            <button class="nav-btn" data-tab="tab-about">
-                <i class="fa-solid fa-circle-info"></i> About TechMaster
-            </button>
-        </nav>
-
-        <!-- Main Content Area -->
-        <main class="main-content">
-            
-            <!-- LEADERBOARD TAB -->
-            <section id="tab-leaderboard" class="tab-pane active fade-in">
-                <div class="controls-panel glass-panel animate-on-load" style="--delay: 0.3s">
-                    <div class="search-box">
-                        <i class="fa-solid fa-search"></i>
-                        <input type="text" id="searchInput" placeholder="Search leaderboard..." />
-                    </div>
-                </div>
-
-                <div class="leaderboard-wrapper animate-on-load" style="--delay: 0.4s">
-                    <div class="leaderboard-list" id="leaderboardBody">
-                        <!-- Populated dynamically via JS -->
-                    </div>
-                </div>
-            </section>
-
-            <!-- MEMBERS TAB -->
-            <section id="tab-members" class="tab-pane fade-in">
-                <div class="controls-panel glass-panel">
-                    <div class="search-box">
-                        <i class="fa-solid fa-search"></i>
-                        <input type="text" id="memberSearch" placeholder="Search community members..." />
-                    </div>
-                </div>
-                <div class="members-grid" id="membersGrid">
-                    <!-- Populated dynamically via JS -->
-                </div>
-            </section>
-
-            <!-- EVENTS TAB -->
-            <section id="tab-events" class="tab-pane fade-in">
-                <h2 class="section-heading text-gradient">Past & Upcoming Events</h2>
-                <div class="events-list" id="eventsContainer">
-                    <!-- Populated dynamically via JS -->
-                </div>
-            </section>
-
-            <!-- POINTS & LEVELS TAB -->
-            <section id="tab-point-system" class="tab-pane fade-in">
-                <div class="grid-layout">
-                    <div class="glass-panel">
-                        <h2 class="panel-title"><i class="fa-solid fa-coins icon-gradient"></i> Points System</h2>
-                        <ul class="fancy-list" id="pointsList"></ul>
-                    </div>
-                    <div class="glass-panel">
-                        <h2 class="panel-title"><i class="fa-solid fa-book icon-gradient"></i> Role Guidelines</h2>
-                        <div class="roles-grid" id="rolesGrid"></div>
-                    </div>
-                </div>
-                <div class="glass-panel" style="margin-top: 1.5rem;">
-                    <h2 class="panel-title"><i class="fa-solid fa-layer-group icon-gradient"></i> Level Progression</h2>
-                    <div class="timeline flex-timeline" id="levelsTimeline"></div>
-                </div>
-            </section>
-
-            <!-- ABOUT TAB -->
-            <section id="tab-about" class="tab-pane fade-in">
-                <div class="about-card glass-panel text-center">
-                    <div class="about-logo">
-                        <i class="fa-solid fa-code pulse-animation" style="font-size: 4rem; color: var(--primary); margin-bottom: 1rem;"></i>
-                    </div>
-                    <h1 class="text-gradient" style="font-size: 2.5rem; margin-bottom: 0.5rem;">About TechMaster</h1>
-                    <p class="slogan" style="color: var(--gold); font-weight: 500; font-size: 1.2rem; margin: 1rem 0; display: inline-block; padding: 0.6rem 1.5rem; background: rgba(255, 215, 0, 0.1); border-radius: 30px; border: 1px solid rgba(255, 215, 0, 0.3);">
-                        <i class="fa-solid fa-sparkles"></i> Everyone deserves a big package <i class="fa-solid fa-sparkles"></i>
-                    </p>
-                    <p class="about-desc">
-                        TechMaster is a dedicated community for aspiring tech professionals and seasoned engineers to engage in hands-on interview preparation. By conducting mock interviews, peer reviews, and gamified point distributions, we foster an environment of continuous learning and growth. Participate, earn points, increase your CTC potential, and become an industry-ready engineering master!
-                    </p>
-                </div>
-            </section>
-
-        </main>
-    </div>
-
-    <script src="app.js"></script>
+  <nav id="navbar"></nav>
+  <main id="app"></main>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>

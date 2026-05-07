@@ -1,397 +1,427 @@
-// Data Structures
-const LEVELS = [
-    { min: 600, name: "Principal Engineer 2", pkg: "5CR" },
-    { min: 560, name: "Principal Engineer 1", pkg: "3.5CR" },
-    { min: 500, name: "Staff Engineer 2 / EM2", pkg: "2.4CR" },
-    { min: 360, name: "Staff Engineer 1 / EM1", pkg: "1.8CR" },
-    { min: 300, name: "SDE 5 (Senior 2)", pkg: "1.4CR" },
-    { min: 250, name: "SDE 4 (Senior 1)", pkg: "1.1CR" },
-    { min: 220, name: "SDE 3", pkg: "75L" },
-    { min: 160, name: "SDE 2", pkg: "55L" },
-    { min: 130, name: "SDE 1", pkg: "38L" },
-    { min: 110, name: "Intern 2", pkg: "15L" },
-    { min: 50, name: "Intern 1", pkg: "12L" },
-    { min: 0, name: "New Graduate", pkg: "0" }
-]; // Sorted descending for easier calculation
+// ── Router ────────────────────────────────────────────────────────────────────
 
-const POINT_SYSTEM = [
-    { role: "Interviewee", points: 25 },
-    { role: "TechMaster of the day", points: 20 },
-    { role: "Interviewer", points: 20 },
-    { role: "Winner Performer (Any)", points: 15 },
-    { role: "Timer of the day", points: 10 },
-    { role: "Winner Best Reviewer", points: 10 }
-];
-
-const ROLES_INFO = [
-    {
-        title: "TechMaster of the day",
-        icon: "fa-solid fa-crown",
-        desc: "Orchestrates the session, ensures smooth flow, handles introductions, sets the stage, and wraps up the daily interview prep community event."
-    },
-    {
-        title: "Interviewer",
-        icon: "fa-solid fa-user-tie",
-        desc: "Conducts the mock interview, asks relevant technical/behavioral questions, evaluates the candidate strictly, and provides constructive feedback."
-    },
-    {
-        title: "Interviewee",
-        icon: "fa-solid fa-laptop-code",
-        desc: "Participates as the candidate, solves the given problems, communicates thought process clearly, and handles follow-up challenges."
-    },
-    {
-        title: "Timer of the day",
-        icon: "fa-solid fa-stopwatch",
-        desc: "Strictly keeps track of time for each segment of the session, ensuring nobody overruns and the overall schedule is maintained."
-    },
-    {
-        title: "Winner Performer",
-        icon: "fa-solid fa-medal",
-        desc: "Awarded to the participant (Interviewer or Interviewee) demonstrating exceptional technical depth, preparation, and presentation during the session."
-    },
-    {
-        title: "Winner Best Reviewer",
-        icon: "fa-solid fa-star",
-        desc: "Awarded to the community member providing the most insightful, constructive, and actionable peer feedback during the review phase."
-    }
-];
-
-const EVENTS = [
-    {
-        date: "2026-03-21",
-        theme: "-",
-        interviewer1: "7",
-        interviewee1: "9",
-        topic1: "Design Youtube",
-        interviewer2: "4",
-        interviewee2: "5",
-        topic2: "Design a Food Delivery App",
-        tmOfTheDay: "9",
-        timerOfTheDay: "9",
-        winnerPerformer: "5",
-        winnerReviewer: "-",
-        icebreakers: ["7", "9", "4", "5"]
-    },
-    {
-        date: "2026-04-01",
-        theme: "Cricket",
-        interviewer1: "17",
-        interviewee1: "24",
-        topic1: "Design a Cricket Streaming System",
-        interviewer2: "20",
-        interviewee2: "4",
-        topic2: "Design a Fantasy Cricket Application / Sports Betting App",
-        tmOfTheDay: "13", // Alice
-        timerOfTheDay: "5", // Eve
-        winnerPerformer: "9999", // TBD
-        winnerReviewer: "9999", // TBD
-        icebreakers: ["17", "24", "20"]
-    }
-];
-
-// Edit this array to manually change the leaderboard contents
-const MEMBERS = [
-    { id: "0", name: "Atharsh", points: 0 },
-    { id: "1", name: "Abarna", points: 0 },
-    { id: "2", name: "Anbarasan", points: 0 },
-    { id: "3", name: "Anil Kumawat", points: 0 },
-    { id: "4", name: "Aravind Rajendran", points: 60 },
-    { id: "5", name: "Bino", points: 40 },
-    { id: "6", name: "Chandan Kumar", points: 0 },
-    { id: "7", name: "Gaurav Mishra", points: 20 },
-    { id: "8", name: "Greeshmanth Reddy", points: 0 },
-    { id: "9", name: "Karthik", points: 25 },
-    { id: "10", name: "Navin", points: 0 },
-    { id: "11", name: "Nitish Adi Reddy", points: 0 },
-    { id: "12", name: "Praveen", points: 0 },
-    { id: "13", name: "Priyanka S", points: 20 },
-    { id: "14", name: "PV", points: 0 },
-    { id: "15", name: "Ram Kumar", points: 0 },
-    { id: "16", name: "Ranjith", points: 0 },
-    { id: "17", name: "Raushan", points: 30 },
-    { id: "18", name: "Saptarshi", points: 0 },
-    { id: "19", name: "Shashi", points: 0 },
-    { id: "20", name: "Shrini", points: 20 },
-    { id: "21", name: "Srujana", points: 0 },
-    { id: "22", name: "Swati", points: 0 },
-    { id: "23", name: "Thafsil", points: 0 },
-    { id: "24", name: "Veeresh", points: 40 },
-    { id: "25", name: "Bathri", points: 0 },
-    { id: "26", name: "Arun S", points: 0 },
-    { id: "27", name: "Anu", points: 0 },
-    { id: "28", name: "Vishnu", points: 0 },
-    { id: "29", name: "Madan", points: 0 },
-    { id: "30", name: "Rekha", points: 0 },
-    { id: "31", name: "Pramod", points: 0 },
-    { id: "33", name: "Vishnu", points: 0 },
-    { id: "34", name: "Venkatesh", points: 0 },
-    { id: "34", name: "Manikandan", points: 0 },
-    { id: "9999", name: "TBD", points: 0 }
-];
-
-// State
-let members = MEMBERS;
-
-// Helper: Get Member Badge by ID
-function getMemberBadge(id) {
-    const member = members.find(m => m.id === id);
-    if (!member) return `<span class="member-badge"><span class="m-name">Unknown</span></span>`;
-
-    // For non-participants like TBD or missing names
-    if (member.name === "TBD" || member.name === "-") {
-        return `<span class="member-badge"><span class="m-name">${member.name}</span></span>`;
-    }
-
-    return `
-    <span class="member-badge">
-        <span class="tm-prefix">TM</span>
-        <span class="m-name">${member.name}</span>
-        <span class="m-points">${member.points} pts</span>
-    </span>`;
+function getRoute() {
+  const hash = window.location.hash.replace('#', '') || '';
+  const parts = hash.split('/').filter(Boolean);
+  return { section: parts[0] || 'home', id: parts[1] || null };
 }
 
-// Helper: Get Level from Points
-function getLevel(points) {
-    for (let lvl of LEVELS) {
-        if (points >= lvl.min) return lvl;
-    }
-    return LEVELS[LEVELS.length - 1]; // Fallback to lowest
+function navigate(path) {
+  window.location.hash = path;
 }
 
-// Elements
-const tabs = document.querySelectorAll('.nav-btn');
-const panes = document.querySelectorAll('.tab-pane');
-const leaderboardBody = document.getElementById('leaderboardBody');
-const searchInput = document.getElementById('searchInput');
+// ── Templates ─────────────────────────────────────────────────────────────────
 
-const membersGrid = document.getElementById('membersGrid');
-const memberSearch = document.getElementById('memberSearch');
-
-const eventsContainer = document.getElementById('eventsContainer');
-
-const pointsList = document.getElementById('pointsList');
-const levelsTimeline = document.getElementById('levelsTimeline');
-const rolesGrid = document.getElementById('rolesGrid');
-
-// Initialization
-function init() {
-    renderLeaderboard();
-    renderMembers();
-    renderEvents();
-    renderPoints();
-    renderLevels();
-    renderRoles();
-    setupEventListeners();
+function difficultyBadge(d) {
+  const cls = { Easy: 'easy', Medium: 'medium', Hard: 'hard' }[d] || 'easy';
+  return `<span class="badge badge-${cls}">${d}</span>`;
 }
 
-// Render logic
-function renderLeaderboard(filter = "") {
-    // Only show members actively earning points
-    let activeMembers = members.filter(p => p.points > 0);
+function companyTags(companies) {
+  return companies.map(c => `<span class="tag">${c}</span>`).join('');
+}
 
-    // Sort descending by points, then by name alphabetically for ties
-    let sorted = activeMembers.sort((a, b) => {
-        if (b.points !== a.points) return b.points - a.points;
-        return a.name.localeCompare(b.name);
-    });
+function topicTags(tags) {
+  return tags.map(t => `<span class="tag tag-outline">${t}</span>`).join('');
+}
 
-    if (filter) {
-        sorted = sorted.filter(p => p.name.toLowerCase().includes(filter.toLowerCase()));
-    }
+function renderHome() {
+  return `
+    <section class="home">
+      <div class="home-hero">
+        <div class="hero-badge">Knowledge Base</div>
+        <h1 class="hero-title">Tech<span class="accent">Master</span></h1>
+        <p class="hero-sub">Your go-to resource for DSA and System Design interview prep.<br>Pick a topic, study, and share the link with your fellow participants.</p>
+      </div>
 
-    leaderboardBody.innerHTML = '';
-
-    if (sorted.length === 0) {
-        leaderboardBody.innerHTML = `<div class="empty-state">No participants found.</div>`;
-        return;
-    }
-
-    sorted.forEach((p, index) => {
-        const lvl = getLevel(p.points);
-        const rank = index + 1;
-        const rankClass = rank <= 3 ? `rank-${rank}` : 'rank-standard';
-        const initial = p.name.charAt(0).toUpperCase();
-
-        const card = document.createElement('div');
-        card.className = `leaderboard-card ${rankClass}`;
-        card.innerHTML = `
-            <div class="card-left">
-                <div class="rank-badge">${rank}</div>
-                <div class="participant-info">
-                    <div class="avatar">${initial}</div>
-                    <div class="participant-details">
-                        <span class="p-name">TM ${p.name}</span>
-                        <div class="p-meta">
-                            <span class="level-badge">${lvl.name}</span>
-                            <span class="ctc-badge">${lvl.pkg === '0' ? '' : lvl.pkg}</span>
-                        </div>
-                    </div>
-                </div>
+      <div class="category-grid">
+        <div class="category-card sd-card" onclick="navigate('system-design')">
+          <div class="cat-icon sd-icon">
+            <i class="fa-solid fa-sitemap"></i>
+          </div>
+          <div class="cat-info">
+            <h2>System Design</h2>
+            <p>${DATA.systemDesign.length} topics — URL shortener, distributed systems, real-time apps, and more.</p>
+            <div class="cat-meta">
+              <span><i class="fa-solid fa-layer-group"></i> Architecture</span>
+              <span><i class="fa-solid fa-scale-balanced"></i> Trade-offs</span>
+              <span><i class="fa-solid fa-building"></i> Companies</span>
             </div>
-            <div class="card-right">
-                <div class="points-display">
-                    <span class="p-points">${p.points}</span>
-                    <span class="p-pts-label">pts</span>
-                </div>
-            </div>
-        `;
-        leaderboardBody.appendChild(card);
-    });
-}
-
-function renderMembers(filter = "") {
-    let list = [...members].sort((a, b) => a.name.localeCompare(b.name));
-    if (filter) {
-        list = list.filter(p => p.name.toLowerCase().includes(filter.toLowerCase()));
-    }
-
-    membersGrid.innerHTML = '';
-
-    if (list.length === 0) {
-        membersGrid.innerHTML = `<div class="empty-state" style="grid-column: 1/-1;">No members found.</div>`;
-        return;
-    }
-
-    list.forEach(p => {
-        const initial = p.name.charAt(0).toUpperCase();
-        const roleText = p.points > 0 ? "Active Member" : "Member";
-
-        membersGrid.innerHTML += `
-            <div class="member-box">
-                <div class="avatar">${initial}</div>
-                <h3 style="color: white; font-size: 1.1rem; margin-bottom: 0;">TM ${p.name}</h3>
-                <span class="m-points" style="color: var(--success); font-weight: 700; font-size: 0.9rem;">${p.points} pts</span>
-                <span class="m-role-badge" style="margin-top: 5px;">${roleText}</span>
-            </div>
-        `;
-    });
-}
-
-function renderEvents() {
-    eventsContainer.innerHTML = '';
-
-    if (EVENTS.length === 0) {
-        eventsContainer.innerHTML = `<div class="empty-state">No events scheduled.</div>`;
-        return;
-    }
-
-    EVENTS.forEach(ev => {
-        const icebreakerNames = ev.icebreakers.map(id => getMemberBadge(id));
-        const icebreakerHtml = icebreakerNames.length > 0
-            ? `<div class="icebreaker"><i class="fa-solid fa-fire"></i> Icebreakers: <div class="badge-group">${icebreakerNames.join('')}</div></div>`
-            : '';
-
-        eventsContainer.innerHTML += `
-            <div class="event-card">
-                <div class="event-header">
-                    <div class="event-title">${ev.theme}</div>
-                    <div class="event-date"><i class="fa-regular fa-calendar"></i> ${ev.date}</div>
-                </div>
-                <div class="event-details-grid">
-                    <div class="event-role-chip" style="grid-column: 1 / -1;">
-                        <span class="event-role-label">Discussion 1</span>
-                        <span class="event-role-value">
-                            <i class="fa-solid fa-comments" style="color: var(--primary)"></i> 
-                            <span style="display: flex; align-items: center; gap: 0.3rem; white-space: nowrap;">Interviewer: ${getMemberBadge(ev.interviewer1)}</span> 
-                            <span style="color: var(--text-muted);">|</span> 
-                            <span style="display: flex; align-items: center; gap: 0.3rem; white-space: nowrap;">Interviewee: ${getMemberBadge(ev.interviewee1)}</span>
-                        </span>
-                        <div class="event-topic">${ev.topic1}</div>
-                    </div>
-                    <div class="event-role-chip" style="grid-column: 1 / -1;">
-                        <span class="event-role-label">Discussion 2</span>
-                        <span class="event-role-value">
-                            <i class="fa-solid fa-comments" style="color: var(--accent)"></i> 
-                            <span style="display: flex; align-items: center; gap: 0.3rem; white-space: nowrap;">Interviewer: ${getMemberBadge(ev.interviewer2)}</span> 
-                            <span style="color: var(--text-muted);">|</span> 
-                            <span style="display: flex; align-items: center; gap: 0.3rem; white-space: nowrap;">Interviewee: ${getMemberBadge(ev.interviewee2)}</span>
-                        </span>
-                        <div class="event-topic">${ev.topic2}</div>
-                    </div>
-                    <div class="event-role-chip">
-                        <span class="event-role-label">TM of the Day</span>
-                        <span class="event-role-value"><i class="fa-solid fa-crown" style="color: var(--gold)"></i> ${getMemberBadge(ev.tmOfTheDay)}</span>
-                    </div>
-                    <div class="event-role-chip">
-                        <span class="event-role-label">Timer</span>
-                        <span class="event-role-value"><i class="fa-solid fa-stopwatch" style="color: var(--danger)"></i> ${getMemberBadge(ev.timerOfTheDay)}</span>
-                    </div>
-                    <div class="event-role-chip">
-                        <span class="event-role-label">Winner Performer</span>
-                        <span class="event-role-value"><i class="fa-solid fa-medal" style="color: var(--gold)"></i> ${getMemberBadge(ev.winnerPerformer)}</span>
-                    </div>
-                    <div class="event-role-chip">
-                        <span class="event-role-label">Winner Reviewer</span>
-                        <span class="event-role-value"><i class="fa-solid fa-star" style="color: var(--gold)"></i> ${getMemberBadge(ev.winnerReviewer)}</span>
-                    </div>
-                </div>
-                ${icebreakerHtml}
-            </div>
-        `;
-    });
-}
-
-function renderPoints() {
-    pointsList.innerHTML = POINT_SYSTEM.map(p => `
-        <li>
-            <span class="role-name">${p.role}</span>
-            <span class="points-val">+${p.points} pts</span>
-        </li>
-    `).join('');
-}
-
-function renderLevels() {
-    // Render from bottom to top
-    const ascLevels = [...LEVELS].reverse();
-    levelsTimeline.innerHTML = ascLevels.map((l, i) => {
-        return `
-        <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="level-info">
-                <div class="level-header">
-                    <span class="level-name">${l.name}</span>
-                    <span class="level-pkg">${l.pkg === '0' ? '' : l.pkg + ' Eqv'}</span>
-                </div>
-                <div class="level-req">Required Points: ${l.min}</div>
-            </div>
+          </div>
+          <i class="fa-solid fa-arrow-right cat-arrow"></i>
         </div>
-        `;
-    }).join('');
-}
 
-function renderRoles() {
-    rolesGrid.innerHTML = ROLES_INFO.map(r => `
-        <div class="role-card">
-            <div class="role-icon"><i class="${r.icon}"></i></div>
-            <h3>${r.title}</h3>
-            <p>${r.desc}</p>
+        <div class="category-card dsa-card" onclick="navigate('dsa')">
+          <div class="cat-icon dsa-icon">
+            <i class="fa-solid fa-code"></i>
+          </div>
+          <div class="cat-info">
+            <h2>DSA</h2>
+            <p>${DATA.dsa.length} topics — arrays, graphs, dynamic programming, trees, and more.</p>
+            <div class="cat-meta">
+              <span><i class="fa-solid fa-stopwatch"></i> Complexity</span>
+              <span><i class="fa-solid fa-lightbulb"></i> Patterns</span>
+              <span><i class="fa-solid fa-terminal"></i> Problems</span>
+            </div>
+          </div>
+          <i class="fa-solid fa-arrow-right cat-arrow"></i>
         </div>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-item">
+          <span class="stat-num">${DATA.systemDesign.length + DATA.dsa.length}</span>
+          <span class="stat-label">Total Topics</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <span class="stat-num">${DATA.systemDesign.reduce((a, t) => a + t.companies.length, 0) + DATA.dsa.reduce((a, t) => a + t.companies.length, 0)}</span>
+          <span class="stat-label">Company Data Points</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <span class="stat-num">${DATA.dsa.reduce((a, t) => a + t.problems.length, 0)}</span>
+          <span class="stat-label">Practice Problems</span>
+        </div>
+      </div>
+    </section>
+  `;
+}
+
+function renderCategory(type) {
+  const topics = type === 'system-design' ? DATA.systemDesign : DATA.dsa;
+  const label = type === 'system-design' ? 'System Design' : 'DSA';
+  const colorClass = type === 'system-design' ? 'sd' : 'dsa';
+  const icon = type === 'system-design' ? 'fa-sitemap' : 'fa-code';
+
+  const cards = topics.map(t => `
+    <div class="topic-card ${colorClass}-card-sm" onclick="navigate('${type}/${t.id}')">
+      <div class="tc-header">
+        <div>
+          <h3>${t.title}</h3>
+          ${t.subtitle ? `<p class="tc-subtitle">${t.subtitle}</p>` : ''}
+        </div>
+        ${difficultyBadge(t.difficulty)}
+      </div>
+      <div class="tc-companies">${companyTags(t.companies.slice(0, 4))}${t.companies.length > 4 ? `<span class="tag-more">+${t.companies.length - 4}</span>` : ''}</div>
+      <div class="tc-tags">${topicTags(t.tags.slice(0, 3))}</div>
+      <div class="tc-footer">
+        <span class="tc-link">View topic <i class="fa-solid fa-arrow-right"></i></span>
+      </div>
+    </div>
+  `).join('');
+
+  return `
+    <section class="category-page">
+      <div class="page-header">
+        <button class="back-btn" onclick="navigate('home')">
+          <i class="fa-solid fa-arrow-left"></i> Home
+        </button>
+        <div class="page-title-wrap">
+          <div class="page-icon ${colorClass}-icon"><i class="fa-solid ${icon}"></i></div>
+          <h1>${label}</h1>
+        </div>
+        <p class="page-desc">${topics.length} topics with company data, expected questions, and detailed approaches.</p>
+      </div>
+
+      <div class="search-bar-wrap">
+        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+        <input
+          type="text"
+          id="topic-search"
+          class="search-bar"
+          placeholder="Search topics..."
+          oninput="filterTopics(this.value, '${type}')"
+        />
+      </div>
+
+      <div class="topics-grid" id="topics-grid">
+        ${cards}
+      </div>
+      <p id="no-results" class="no-results hidden">No topics match your search.</p>
+    </section>
+  `;
+}
+
+function renderTopic(type, id) {
+  const topics = type === 'system-design' ? DATA.systemDesign : DATA.dsa;
+  const topic = topics.find(t => t.id === id);
+  if (!topic) return `<div class="error-page"><h2>Topic not found.</h2><button onclick="navigate('${type}')">Back</button></div>`;
+
+  const colorClass = type === 'system-design' ? 'sd' : 'dsa';
+  const categoryLabel = type === 'system-design' ? 'System Design' : 'DSA';
+
+  const shareUrl = `${window.location.origin}${window.location.pathname}#${type}/${id}`;
+
+  const questionsHtml = topic.expectedQuestions.map(q => `<li>${q}</li>`).join('');
+
+  const componentsHtml = (type === 'system-design' ? topic.keyComponents : [])
+    .map(c => `
+      <div class="component-card">
+        <div class="comp-name">${c.name}</div>
+        <div class="comp-desc">${c.description}</div>
+      </div>
     `).join('');
+
+  const stepsHtml = type === 'system-design'
+    ? topic.designSteps.map((s, i) => `
+        <div class="step-item">
+          <div class="step-num">${i + 1}</div>
+          <div class="step-text">${s}</div>
+        </div>
+      `).join('')
+    : '';
+
+  const tradeoffsHtml = type === 'system-design'
+    ? `<div class="tradeoffs-grid">
+        ${topic.tradeoffs.map(t => `
+          <div class="tradeoff-card">
+            <div class="tradeoff-aspect">${t.aspect}</div>
+            <div class="tradeoff-row">
+              <div class="tradeoff-pro"><i class="fa-solid fa-circle-check"></i> ${t.pro}</div>
+              <div class="tradeoff-con"><i class="fa-solid fa-circle-xmark"></i> ${t.con}</div>
+            </div>
+          </div>
+        `).join('')}
+      </div>`
+    : '';
+
+  const followUpsHtml = type === 'system-design'
+    ? `<section class="topic-section">
+        <h2><i class="fa-solid fa-comments"></i> Follow-up Questions</h2>
+        <ul class="followups-list">
+          ${topic.followUps.map(f => `<li>${f}</li>`).join('')}
+        </ul>
+      </section>`
+    : '';
+
+  // DSA-specific sections
+  const dsaProblemsHtml = type === 'dsa'
+    ? `<section class="topic-section">
+        <h2><i class="fa-solid fa-list-check"></i> Practice Problems</h2>
+        <div class="problems-table">
+          <div class="pt-header">
+            <span>Problem</span>
+            <span>Difficulty</span>
+            <span>Key Insight</span>
+          </div>
+          ${topic.problems.map(p => `
+            <div class="pt-row">
+              <span class="pt-name">${p.name}</span>
+              <span>${difficultyBadge(p.difficulty)}</span>
+              <span class="pt-note">${p.note}</span>
+            </div>
+          `).join('')}
+        </div>
+      </section>`
+    : '';
+
+  const dsaMetaHtml = type === 'dsa'
+    ? `<div class="complexity-row">
+        <div class="complexity-card">
+          <div class="cx-label"><i class="fa-solid fa-clock"></i> Time Complexity</div>
+          <div class="cx-value">${topic.timeComplexity}</div>
+        </div>
+        <div class="complexity-card">
+          <div class="cx-label"><i class="fa-solid fa-memory"></i> Space Complexity</div>
+          <div class="cx-value">${topic.spaceComplexity}</div>
+        </div>
+      </div>`
+    : '';
+
+  const insightsHtml = type === 'dsa'
+    ? `<section class="topic-section">
+        <h2><i class="fa-solid fa-lightbulb"></i> Key Insights</h2>
+        <ul class="insights-list">
+          ${topic.keyInsights.map(i => `<li>${i}</li>`).join('')}
+        </ul>
+      </section>`
+    : '';
+
+  const mistakesHtml = type === 'dsa'
+    ? `<section class="topic-section">
+        <h2><i class="fa-solid fa-triangle-exclamation"></i> Common Mistakes</h2>
+        <ul class="mistakes-list">
+          ${topic.commonMistakes.map(m => `<li>${m}</li>`).join('')}
+        </ul>
+      </section>`
+    : '';
+
+  return `
+    <section class="topic-page">
+      <div class="topic-nav">
+        <button class="back-btn" onclick="navigate('${type}')">
+          <i class="fa-solid fa-arrow-left"></i> ${categoryLabel}
+        </button>
+        <button class="share-btn" onclick="copyLink('${shareUrl}')">
+          <i class="fa-solid fa-link"></i> <span id="share-btn-text">Copy Link</span>
+        </button>
+      </div>
+
+      <div class="topic-header ${colorClass}-header">
+        <div class="th-meta">
+          ${difficultyBadge(topic.difficulty)}
+          ${type === 'dsa' ? `<span class="pattern-badge">${topic.pattern}</span>` : ''}
+        </div>
+        <h1>${topic.title}</h1>
+        ${topic.subtitle ? `<p class="th-subtitle">${topic.subtitle}</p>` : ''}
+        <div class="th-tags">${topicTags(topic.tags)}</div>
+      </div>
+
+      <section class="topic-section">
+        <h2><i class="fa-solid fa-circle-info"></i> Overview</h2>
+        <p class="overview-text">${topic.overview}</p>
+      </section>
+
+      <section class="topic-section">
+        <h2><i class="fa-solid fa-building"></i> Companies That Ask This</h2>
+        <div class="company-tags">${companyTags(topic.companies)}</div>
+      </section>
+
+      <section class="topic-section">
+        <h2><i class="fa-solid fa-question-circle"></i> Expected Interview Questions</h2>
+        <ul class="questions-list">
+          ${questionsHtml}
+        </ul>
+      </section>
+
+      ${type === 'system-design' ? `
+        <section class="topic-section">
+          <h2><i class="fa-solid fa-cubes"></i> Key Components</h2>
+          <div class="components-grid">
+            ${componentsHtml}
+          </div>
+        </section>
+
+        <section class="topic-section">
+          <h2><i class="fa-solid fa-stairs"></i> Design Steps</h2>
+          <div class="steps-list">
+            ${stepsHtml}
+          </div>
+        </section>
+
+        <section class="topic-section">
+          <h2><i class="fa-solid fa-scale-balanced"></i> Key Trade-offs</h2>
+          ${tradeoffsHtml}
+        </section>
+      ` : ''}
+
+      ${type === 'dsa' ? `
+        <section class="topic-section">
+          <h2><i class="fa-solid fa-code"></i> Approach & Templates</h2>
+          <pre class="code-block">${escapeHtml(topic.approach.trim())}</pre>
+        </section>
+        ${dsaMetaHtml}
+      ` : ''}
+
+      ${dsaProblemsHtml}
+      ${insightsHtml}
+      ${mistakesHtml}
+      ${followUpsHtml}
+
+      <div class="topic-share-footer">
+        <p>Share this topic with your participants:</p>
+        <div class="share-url-box">
+          <span class="share-url-text" id="share-url-display">${shareUrl}</span>
+          <button class="copy-url-btn" onclick="copyLink('${shareUrl}')">
+            <i class="fa-solid fa-copy"></i> Copy
+          </button>
+        </div>
+      </div>
+    </section>
+  `;
 }
 
-// Event Listeners
-function setupEventListeners() {
-    // Tab switching
-    tabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-            tabs.forEach(t => t.classList.remove('active'));
-            panes.forEach(p => p.classList.remove('active'));
-
-            tab.classList.add('active');
-            document.getElementById(tab.dataset.tab).classList.add('active');
-        });
-    });
-
-    // Search
-    searchInput.addEventListener('input', (e) => {
-        renderLeaderboard(e.target.value);
-    });
-
-    // Search Members
-    memberSearch.addEventListener('input', (e) => {
-        renderMembers(e.target.value);
-    });
+function renderNav() {
+  const { section } = getRoute();
+  const isHome = section === 'home';
+  document.getElementById('navbar').innerHTML = `
+    <div class="nav-inner">
+      <div class="nav-logo" onclick="navigate('home')">
+        <i class="fa-solid fa-rocket"></i>
+        <span>TechMaster</span>
+      </div>
+      <nav class="nav-links">
+        <a onclick="navigate('home')" class="${isHome ? 'active' : ''}">Home</a>
+        <a onclick="navigate('system-design')" class="${section === 'system-design' ? 'active' : ''}">
+          <i class="fa-solid fa-sitemap"></i> System Design
+        </a>
+        <a onclick="navigate('dsa')" class="${section === 'dsa' ? 'active' : ''}">
+          <i class="fa-solid fa-code"></i> DSA
+        </a>
+      </nav>
+    </div>
+  `;
 }
 
-// Start
-document.addEventListener('DOMContentLoaded', init);
+// ── Utilities ─────────────────────────────────────────────────────────────────
+
+function escapeHtml(str) {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+function copyLink(url) {
+  navigator.clipboard.writeText(url).then(() => {
+    const btn = document.getElementById('share-btn-text');
+    if (btn) {
+      btn.textContent = 'Copied!';
+      setTimeout(() => { btn.textContent = 'Copy Link'; }, 2000);
+    }
+  });
+}
+
+function filterTopics(query, type) {
+  const topics = type === 'system-design' ? DATA.systemDesign : DATA.dsa;
+  const grid = document.getElementById('topics-grid');
+  const noResults = document.getElementById('no-results');
+  const q = query.toLowerCase().trim();
+
+  if (!q) {
+    grid.querySelectorAll('.topic-card').forEach(c => c.style.display = '');
+    noResults.classList.add('hidden');
+    return;
+  }
+
+  let visible = 0;
+  grid.querySelectorAll('.topic-card').forEach((card, i) => {
+    const t = topics[i];
+    const match = t.title.toLowerCase().includes(q)
+      || t.tags.some(tag => tag.toLowerCase().includes(q))
+      || t.companies.some(c => c.toLowerCase().includes(q))
+      || (t.subtitle && t.subtitle.toLowerCase().includes(q));
+    card.style.display = match ? '' : 'none';
+    if (match) visible++;
+  });
+
+  noResults.classList.toggle('hidden', visible > 0);
+}
+
+// ── Main render ───────────────────────────────────────────────────────────────
+
+function render() {
+  const { section, id } = getRoute();
+  const app = document.getElementById('app');
+
+  if (section === 'home' || !section) {
+    app.innerHTML = renderHome();
+  } else if (section === 'system-design' && !id) {
+    app.innerHTML = renderCategory('system-design');
+  } else if (section === 'system-design' && id) {
+    app.innerHTML = renderTopic('system-design', id);
+  } else if (section === 'dsa' && !id) {
+    app.innerHTML = renderCategory('dsa');
+  } else if (section === 'dsa' && id) {
+    app.innerHTML = renderTopic('dsa', id);
+  } else {
+    app.innerHTML = renderHome();
+  }
+
+  renderNav();
+  window.scrollTo({ top: 0, behavior: 'instant' });
+}
+
+window.addEventListener('hashchange', render);
+window.addEventListener('load', render);
