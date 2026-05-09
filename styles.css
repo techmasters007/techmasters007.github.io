@@ -1060,6 +1060,262 @@ ul { list-style: none; }
 ::-webkit-scrollbar-thumb { background: var(--border-l); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: #4a4870; }
 
+/* ── Session Recordings ──────────────────────────────────────────────────────── */
+.videos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+  margin-top: 4px;
+}
+
+.videos-note {
+  font-size: 14px;
+  color: var(--text-3);
+  margin: 0 0 14px;
+}
+
+.video-card {
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  text-decoration: none;
+  display: block;
+  transition: border-color .15s, transform .15s;
+}
+
+.video-card:hover {
+  border-color: var(--border-l);
+  transform: translateY(-2px);
+}
+
+.video-thumb {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: var(--bg-2);
+}
+
+.video-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.video-play-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.35);
+  opacity: 0;
+  transition: opacity .15s;
+}
+
+.video-card:hover .video-play-overlay {
+  opacity: 1;
+}
+
+.video-play-overlay i {
+  font-size: 36px;
+  color: #fff;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,.5));
+}
+
+.video-thumb-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: var(--text-3);
+  border-bottom: 1px solid var(--border);
+}
+
+.video-thumb-empty i {
+  font-size: 28px;
+}
+
+.video-thumb-empty span {
+  font-size: 13px;
+}
+
+.video-placeholder {
+  cursor: default;
+}
+
+.video-placeholder:hover {
+  transform: none;
+  border-color: var(--border);
+}
+
+.video-label {
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── Join the Group page ─────────────────────────────────────────────────────── */
+.join-page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 40px 0 80px;
+}
+
+.join-hero {
+  text-align: center;
+  padding: 40px 0 36px;
+}
+
+.join-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 8px 0;
+  margin-bottom: 40px;
+}
+
+.join-section {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  padding: 28px 32px;
+}
+
+.join-section h2 {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0 0 8px;
+}
+
+.join-section p {
+  font-size: 15px;
+  color: var(--text-2);
+  line-height: 1.65;
+  margin: 0;
+}
+
+.join-section p strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.join-section-icon {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: var(--text-2);
+  margin-top: 2px;
+}
+
+.sd-icon-bg {
+  background: var(--sd-bg);
+  border-color: rgba(124, 58, 237, 0.2);
+  color: var(--sd-light);
+}
+
+.dsa-icon-bg {
+  background: var(--dsa-bg);
+  border-color: rgba(16, 185, 129, 0.2);
+  color: var(--dsa-light);
+}
+
+.volunteer-icon-bg {
+  background: rgba(245, 158, 11, 0.08);
+  border-color: rgba(245, 158, 11, 0.2);
+  color: #f59e0b;
+}
+
+.event-format-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.event-format-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 5px 13px;
+  font-size: 13px;
+  color: var(--text-2);
+  font-weight: 500;
+}
+
+.event-format-item i {
+  font-size: 12px;
+  color: var(--text-3);
+}
+
+.join-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 0 32px;
+}
+
+.join-cta {
+  text-align: center;
+}
+
+.join-cta p {
+  font-size: 15px;
+  color: var(--text-2);
+  margin-bottom: 20px;
+}
+
+.whatsapp-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #25d366;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 14px 32px;
+  border-radius: var(--radius);
+  text-decoration: none;
+  transition: background .15s, transform .1s;
+}
+
+.whatsapp-btn:hover {
+  background: #1ebe5d;
+  transform: translateY(-1px);
+}
+
+.whatsapp-btn i {
+  font-size: 22px;
+}
+
+/* Join tab — subtle green tint in nav */
+.nav-links a.join-link {
+  color: #25d366;
+}
+
+.nav-links a.join-link:hover,
+.nav-links a.join-link.active {
+  background: rgba(37, 211, 102, 0.1);
+  color: #25d366;
+}
+
 /* ── Responsive tweaks ───────────────────────────────────────────────────────── */
 @media (max-width: 768px) {
   #app { padding: 24px 16px 60px; }
@@ -1068,4 +1324,6 @@ ul { list-style: none; }
   .topic-section { padding: 18px 16px; }
   .nav-links a span { display: none; }
   .stats-row { gap: 20px; }
+  .join-section { padding: 20px; gap: 14px; }
+  .join-divider { margin: 0 20px; }
 }

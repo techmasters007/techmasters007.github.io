@@ -46,6 +46,7 @@ const DATA = {
         'How would you support private/password-protected URLs?',
         'Design the analytics dashboard — what queries would you optimize for?',
       ],
+      videos: [],
     },
     {
       id: 'twitter-feed',
@@ -92,6 +93,7 @@ const DATA = {
         'How do you implement tweet notifications (likes, replies, mentions)?',
         'How would you design Twitter Spaces (live audio)?',
       ],
+      videos: [ { url: 'https://youtu.be/tW6Es8l-3Zo?si=YTy2smSAZpjNvBxi', title: 'Session - April 20' }],
     },
     {
       id: 'netflix',
@@ -138,6 +140,7 @@ const DATA = {
         'How do you A/B test thumbnail images to maximize click-through?',
         'How do you handle live streaming vs on-demand differently?',
       ],
+      videos: [],
     },
     {
       id: 'whatsapp',
@@ -184,6 +187,9 @@ const DATA = {
         'How would you implement message reactions efficiently?',
         'How would you design voice/video calling on top of this?',
       ],
+      videos: [{
+        url:"https://youtu.be/26Iqj5jsCk0?si=j_KFjxByTcuSIKVq", title:"Session - April 10"
+      }],
     },
     {
       id: 'uber',
@@ -229,6 +235,11 @@ const DATA = {
         'How do you handle GPS spoofing by drivers to inflate fare?',
         'How would you design the driver earnings and payout system?',
         'How do you route notifications efficiently across timezones?',
+      ],
+      videos: [
+        {
+          url:"https://youtu.be/G7SGAMY8k34?si=xqslCQzznZ-Nwj2M",title:"April 10"
+        }
       ],
     },
     {
@@ -276,6 +287,7 @@ const DATA = {
         'How do you rate limit streaming or WebSocket connections?',
         'How would you build a rate limit monitoring and alerting dashboard?',
       ],
+      videos: [],
     },
     {
       id: 'distributed-cache',
@@ -322,6 +334,7 @@ const DATA = {
         'How do you handle clock skew when comparing TTL expirations?',
         'How would you design a write-back cache that never loses data?',
       ],
+      videos: [],
     },
     {
       id: 'google-drive',
@@ -368,6 +381,7 @@ const DATA = {
         'How do you handle GDPR deletion requests across replicated/deduplicated storage?',
         'How do you implement file encryption at rest while supporting deduplication?',
       ],
+      videos: [],
     },
     {
       id: 'notification-system',
@@ -414,6 +428,7 @@ const DATA = {
         'How do you implement A/B testing for notification copy?',
         'How do you build an in-app notification inbox (notification bell with count)?',
       ],
+      videos: [],
     },
     {
       id: 'payment-system',
@@ -460,6 +475,7 @@ const DATA = {
         'How do you design the payout system for marketplace sellers?',
         'How do you implement multi-party split payments (e.g., Airbnb: guest → Airbnb → host)?',
       ],
+      videos: [],
     },
     {
       id: 'web-crawler',
@@ -513,6 +529,7 @@ const DATA = {
         'How would you design the indexing pipeline that processes crawled pages for search?',
         'How do you detect and avoid crawler traps (e.g., infinite calendar URLs)?',
       ],
+      videos: [],
     },
     {
       id: 'ad-click-aggregator',
@@ -565,6 +582,7 @@ const DATA = {
         'How would you extend this to support impression tracking and conversion attribution?',
         'How do you prevent click fraud at the ingestion layer before it enters the pipeline?',
       ],
+      videos: [],
     },
   ],
 
@@ -625,6 +643,7 @@ const DATA = {
         'Using Python slices in loops — they create copies and cost O(k) each time.',
         'Off-by-one in sliding window or two-pointer endpoints.',
       ],
+      videos: [],
     },
     {
       id: 'two-pointers',
@@ -685,6 +704,7 @@ for i in range(len(nums) - 2):
         'Duplicate handling in 3Sum: skip duplicates after recording a valid triplet.',
         'Confusing "find all pairs" (need to record multiple) with "find one pair" (return immediately).',
       ],
+      videos: [],
     },
     {
       id: 'sliding-window',
@@ -737,6 +757,7 @@ for right in range(len(arr)):
         'Confusing "at most k" vs "exactly k" — different termination conditions.',
         'Off-by-one in window size: right - left + 1.',
       ],
+      videos: [],
     },
     {
       id: 'binary-search',
@@ -794,6 +815,7 @@ Key insight: is_feasible() must be monotonic:
         'Not defining invariant clearly — should right = mid or right = mid-1 when condition is true?',
         'Off-by-one: what happens at the boundary? Trace a 2-element example.',
       ],
+      videos: [],
     },
     {
       id: 'linked-lists',
@@ -850,6 +872,7 @@ return dummy.next`,
         'Circular reference bugs — verify tail.next = null after manipulation.',
         'Forgetting to update both head and tail pointers when list structure changes.',
       ],
+      videos: [],
     },
     {
       id: 'trees',
@@ -908,6 +931,7 @@ def validate(node, lo=float('-inf'), hi=float('inf')):
         'BST validation: comparing to direct parent only is wrong — must propagate bounds from all ancestors.',
         'Appending to result inside recursion without a "depth" parameter for level-based grouping.',
       ],
+      videos: [],
     },
     {
       id: 'graphs',
@@ -966,6 +990,7 @@ Topological Sort (Kahn's BFS):
         'Forgetting to iterate over all nodes for disconnected graphs.',
         'Directed cycle detection: "visited" alone is insufficient, need to track nodes on current DFS path.',
       ],
+      videos: [],
     },
     {
       id: 'dynamic-programming',
@@ -1027,6 +1052,7 @@ for i in range(1, n + 1):
         'Off-by-one: returning dp[n-1] vs dp[n] depends on 0-indexed vs 1-indexed definition.',
         'Not initializing DP array with correct default (0 for max-count, infinity for minimization).',
       ],
+      videos: [],
     },
     {
       id: 'backtracking',
@@ -1082,6 +1108,7 @@ Avoiding duplicates:
         'Generating duplicate combinations — need sort + skip-if-same-as-previous at each level.',
         'Not pruning — causes TLE on large inputs even when logic is correct.',
       ],
+      videos: [],
     },
     {
       id: 'heaps',
@@ -1140,6 +1167,7 @@ upper = []  # min-heap — upper half
         'Not rebalancing two-heap sizes after push in the median problem.',
         'Forgetting heapify is O(n) — prefer it over n individual pushes when building from an existing list.',
       ],
+      videos: [],
     },
     {
       id: 'hashing',
@@ -1199,6 +1227,7 @@ for word in words:
         'Modifying a dictionary while iterating over it — iterate over a copy.',
         'Not using .get(key, default) — direct dict[key] raises KeyError on missing keys.',
       ],
+      videos: [],
     },
     {
       id: 'stack-queue',
@@ -1253,6 +1282,7 @@ def dequeue():
         'Using list.pop(0) for queue operations in Python — it is O(n). Use collections.deque instead.',
         'Monotonic direction: increasing stack for "next smaller", decreasing for "next greater" — easy to mix up.',
       ],
+      videos: [],
     },
   ],
 };

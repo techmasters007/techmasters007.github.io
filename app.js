@@ -40,6 +40,45 @@ function navigate(path) {
 
 // ── Templates ─────────────────────────────────────────────────────────────────
 
+function youtubeId(url) {
+  if (!url) return null;
+  const m = url.match(/(?:youtu\.be\/|v=|\/embed\/)([A-Za-z0-9_-]{11})/);
+  return m ? m[1] : null;
+}
+
+function renderVideos(videos) {
+  const hasAny = videos && videos.some(v => v.url);
+
+  const cards = (videos && videos.length ? videos : [{}]).map(v => {
+    const vid = youtubeId(v && v.url);
+    if (vid) {
+      return `
+        <a class="video-card" href="${v.url}" target="_blank" rel="noopener noreferrer">
+          <div class="video-thumb">
+            <img src="https://img.youtube.com/vi/${vid}/hqdefault.jpg" alt="${v.title || 'Session recording'}" loading="lazy">
+            <div class="video-play-overlay"><i class="fa-solid fa-play"></i></div>
+          </div>
+          <div class="video-label">${v.title || 'Session Recording'}</div>
+        </a>`;
+    }
+    return `
+      <div class="video-card video-placeholder">
+        <div class="video-thumb video-thumb-empty">
+          <i class="fa-solid fa-video"></i>
+          <span>Recording coming soon</span>
+        </div>
+        <div class="video-label">Session Recording</div>
+      </div>`;
+  }).join('');
+
+  return `
+    <section class="topic-section">
+      <h2><i class="fa-solid fa-circle-play"></i> Session Recordings</h2>
+      ${!hasAny ? '<p class="videos-note">No recordings yet — videos will appear here after the live session.</p>' : ''}
+      <div class="videos-grid">${cards}</div>
+    </section>`;
+}
+
 function difficultyBadge(d) {
   const cls = { Easy: 'easy', Medium: 'medium', Hard: 'hard' }[d] || 'easy';
   return `<span class="badge badge-${cls}">${d}</span>`;
@@ -347,6 +386,8 @@ function renderTopic(type, id) {
       ${mistakesHtml}
       ${followUpsHtml}
 
+      ${renderVideos(topic.videos)}
+
       <div class="topic-share-footer">
         <p>Share this topic with your participants:</p>
         <div class="share-url-box">
@@ -355,6 +396,106 @@ function renderTopic(type, id) {
             <i class="fa-solid fa-copy"></i> Copy
           </button>
         </div>
+      </div>
+    </section>
+  `;
+}
+
+function renderJoinGroup() {
+  return `
+    <section class="join-page">
+      <div class="join-hero">
+        <div class="hero-badge">Community</div>
+        <h1 class="hero-title">Join the <span class="accent">Group</span></h1>
+        <p class="hero-sub">A weekly study group for engineers serious about interview prep.</p>
+      </div>
+
+      <div class="join-card">
+        <div class="join-section">
+          <div class="join-section-icon"><i class="fa-solid fa-calendar-days"></i></div>
+          <div>
+            <h2>When do we meet?</h2>
+            <p>Every <strong>Saturday, 5:00 – 6:30 PM</strong>. Sessions alternate each week between System Design and DSA, so you get deep practice in both areas over time.</p>
+          </div>
+        </div>
+
+        <div class="join-divider"></div>
+
+        <div class="join-section">
+          <div class="join-section-icon sd-icon-bg"><i class="fa-solid fa-sitemap"></i></div>
+          <div>
+            <h2>System Design Saturdays</h2>
+            <p>Two mock interview pairs run back-to-back — each with one interviewee and one interviewer. Every pair gets exactly <strong>30 minutes</strong> to conduct their mock interview in front of the group. At the end, the audience votes for the <strong>best interviewee</strong> and the <strong>best interviewer</strong>.</p>
+            <div class="event-format-grid">
+              <div class="event-format-item">
+                <i class="fa-solid fa-user-tie"></i>
+                <span>2 interviewers</span>
+              </div>
+              <div class="event-format-item">
+                <i class="fa-solid fa-user"></i>
+                <span>2 interviewees</span>
+              </div>
+              <div class="event-format-item">
+                <i class="fa-solid fa-clock"></i>
+                <span>30 min per pair</span>
+              </div>
+              <div class="event-format-item">
+                <i class="fa-solid fa-trophy"></i>
+                <span>Audience votes</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="join-divider"></div>
+
+        <div class="join-section">
+          <div class="join-section-icon dsa-icon-bg"><i class="fa-solid fa-code"></i></div>
+          <div>
+            <h2>DSA Saturdays</h2>
+            <p>Between <strong>5 and 7 volunteers</strong> each present a problem solution. Every presenter gets <strong>10 minutes</strong> to walk through their logic, algorithm, and complexity analysis. After all presentations, the audience votes for the best solver.</p>
+            <div class="event-format-grid">
+              <div class="event-format-item">
+                <i class="fa-solid fa-users"></i>
+                <span>5–7 solvers</span>
+              </div>
+              <div class="event-format-item">
+                <i class="fa-solid fa-clock"></i>
+                <span>10 min each</span>
+              </div>
+              <div class="event-format-item">
+                <i class="fa-solid fa-diagram-project"></i>
+                <span>Logic & algorithm</span>
+              </div>
+              <div class="event-format-item">
+                <i class="fa-solid fa-trophy"></i>
+                <span>Audience votes</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="join-divider"></div>
+
+        <div class="join-section">
+          <div class="join-section-icon volunteer-icon-bg"><i class="fa-solid fa-hand-raised"></i></div>
+          <div>
+            <h2>How to participate</h2>
+            <p>Sessions are member-led. Anyone can volunteer to present a topic by posting in the WhatsApp group ahead of the Saturday session. There's no pressure — you can join as an audience member any week you're not presenting.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="join-cta">
+        <p>Ready to join? Tap below to join the WhatsApp group and start participating.</p>
+        <a
+          href="https://chat.whatsapp.com/KT7wIllwg3lEC1yrrzwjt4"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="whatsapp-btn"
+        >
+          <i class="fa-brands fa-whatsapp"></i> Join the WhatsApp Group
+        </a>
       </div>
     </section>
   `;
@@ -380,6 +521,9 @@ function renderNav() {
         </a>
         <a onclick="navigate('dsa')" class="${section === 'dsa' ? 'active' : ''}">
           <i class="fa-solid fa-code"></i> DSA
+        </a>
+        <a onclick="navigate('join')" class="join-link ${section === 'join' ? 'active' : ''}">
+          <i class="fa-brands fa-whatsapp"></i> Join the Group
         </a>
       </nav>
       <button class="theme-toggle" onclick="toggleTheme()" title="${themeTitle}" aria-label="${themeTitle}">
@@ -450,6 +594,8 @@ function render() {
     app.innerHTML = renderCategory('dsa');
   } else if (section === 'dsa' && id) {
     app.innerHTML = renderTopic('dsa', id);
+  } else if (section === 'join') {
+    app.innerHTML = renderJoinGroup();
   } else {
     app.innerHTML = renderHome();
   }
